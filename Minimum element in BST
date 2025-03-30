@@ -1,0 +1,27 @@
+https://www.geeksforgeeks.org/problems/minimum-element-in-bst/1?page=1&category=Tree,Binary%20Search%20Tree&sortBy=submissions
+
+class Solution {
+  public:
+ 
+    
+    int minValue(Node* root) {
+        // Code here
+        
+       int mini=INT_MAX;
+        
+       while(root!=NULL){
+           
+           mini=min(mini,root->data);
+           
+           if(root->left)
+            root=root->left;
+            
+           else
+             root=root->right;
+       }
+       
+       return mini;
+             
+
+    }
+};
