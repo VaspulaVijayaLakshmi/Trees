@@ -1,0 +1,36 @@
+https://www.geeksforgeeks.org/problems/check-for-bst/1?page=1&category=Tree,Binary%20Search%20Tree&sortBy=submissions
+
+class Solution {
+  public:
+    // Function to check whether a Binary Tree is BST or not.
+    
+    
+    // LST - All nodes left to root are less than root 
+    // RST - All nodes right to root are greater than root
+    
+    bool BSTHelper(Node* root, int left, int right ){
+        
+      if(root==NULL)
+         return true;
+      
+      
+      if(root->data < left  || root->data > right)
+         return false;
+      
+      return BSTHelper(root->left,left,root->data) && BSTHelper(root->right,root->data,right);
+        
+        
+    }
+    
+    
+    
+    bool isBST(Node* root) {
+        // Your code here
+
+     if(root==NULL)
+      return true;
+     
+   return BSTHelper(root, INT_MIN, INT_MAX);
+    
+    }
+};
