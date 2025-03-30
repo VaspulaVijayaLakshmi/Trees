@@ -1,0 +1,39 @@
+https://www.geeksforgeeks.org/problems/sum-tree/1?page=1&category=Tree,Binary%20Search%20Tree&sortBy=submissions
+
+class Solution {
+  public:
+  
+   int sumTree(Node* root){
+       
+       if(root==NULL) return 0;
+       
+       
+       if(root->left ==NULL && root-> right==NULL)
+        return root->data;
+        
+        int lval= sumTree(root->left);
+        int rval= sumTree(root->right);
+        
+        if(lval==-1 || rval==-1 || root->data !=  lval+rval) 
+         return -1;
+
+        
+        return rval+lval+root->data;
+           
+        
+   }
+   
+  
+    bool isSumTree(Node* root) {
+        
+        if(root==NULL) return true;
+        
+        
+        if(sumTree(root)==-1)
+         return false;
+         
+         
+         return true;
+        
+    }
+};
