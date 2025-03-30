@@ -1,0 +1,121 @@
+https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1?page=1&category=Tree,Binary%20Search%20Tree&sortBy=submissions
+
+class Solution {
+ 
+  public:
+  
+ void leaves(Node *root, vector<int> &leaf){
+    
+    if(root==NULL) return;
+
+    if(root->left==NULL && root-> right==NULL)
+     leaf.push_back(root->data);
+    
+    
+    leaves(root->left,leaf);
+    leaves(root->right,leaf);
+}
+
+
+
+void leftView(Node* root,vector<int> &LV){
+    
+    
+    while(root){
+        
+        if(root->left==NULL && root->right==NULL)
+         break;
+        
+        LV.push_back(root->data);
+        
+        if(root->left!=NULL){
+            root=root->left;
+        }
+        
+        else{
+            root=root->right;
+        }
+    
+    }
+    
+}
+
+
+
+void rightView(Node* root,vector<int> &RV){
+    
+   while(root){
+       
+        if(root->left==NULL && root->right==NULL)
+         break;
+        
+        RV.push_back(root->data);
+        
+        if(root->right!=NULL){
+            root=root->right;
+        }
+        
+        else{
+            root=root->left;
+        }
+    
+    }  
+    
+}
+
+
+  
+  
+    vector<int> boundaryTraversal(Node *root) {
+        // code here
+        
+        
+        vector<int> leaf;
+        vector<int> LV;
+        vector<int> RV;
+        
+        vector<int> res;
+
+        if(root==NULL) return {};
+        
+        if(root->left ==NULL && root->right==NULL)
+        return {root->data};
+        
+    //   left boundary traversal
+       if(root->left!=NULL)
+        leftView(root->left,LV);
+        
+        
+        // right boundary traversal
+       if(root->right!=NULL)    
+        rightView(root->right,RV);
+        
+    //   leaf traversal 
+       leaves(root, leaf); 
+       
+       
+       
+       
+    //   push root
+       res.push_back(root->data);
+       
+       for(auto ele : LV)
+         res.push_back(ele);
+         
+         
+       for(auto ele : leaf)
+         res.push_back(ele);
+        
+        // reverse right boundary trvaersal
+       reverse(RV.begin(),RV.end()); 
+          
+       for(auto ele : RV)
+         res.push_back(ele); 
+         
+         
+    
+       return res;
+    
+    }
+};
+
