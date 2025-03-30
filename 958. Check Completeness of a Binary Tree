@@ -1,0 +1,48 @@
+
+//  with bfs - if The levels forst node is null , then not complete
+
+
+
+// in dfs - we can use the indesing method
+
+// parent - i 
+// children are 2*i and (2*i)+1
+
+// and we will the indices
+
+
+// if there are lets say n nodes then , n slots should be there in array
+// if there are more than n slots filled, that means children are skipped and filled
+
+class Solution {
+public:
+    bool isCompleteTree(TreeNode* root) {
+        
+        queue<TreeNode*> q;
+
+        bool nullNodePresent=false;
+        q.push(root);
+
+        while(!q.empty()){
+ 
+            auto front=q.front();
+            q.pop();
+
+            if(front==NULL) 
+              nullNodePresent=true;
+            
+            else {
+            
+            if(nullNodePresent) 
+              return false;
+
+            q.push(front->left);
+            q.push(front->right);
+            }
+
+        }
+
+  return true;
+
+    }
+};
