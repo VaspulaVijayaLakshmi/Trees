@@ -1,0 +1,30 @@
+https://www.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-binary-tree/1?page=1&category=Tree,Binary%20Search%20Tree&sortBy=submissions
+
+class Solution {
+  public:
+    // Function to return the lowest common ancestor in a Binary Tree.
+    Node* lca(Node* root, int n1, int n2) {
+        // Your code here
+        
+        if(root==NULL) return NULL;
+        
+        
+        if(root->data == n1 || root->data == n2)
+         return root;
+         
+         
+        Node* lroot =  lca(root->left,n1,n2);
+        Node* rroot =  lca(root->right,n1,n2);
+        
+        
+        if(lroot!=NULL && rroot!=NULL)
+          return root;
+          
+        if(lroot==NULL)
+        return rroot;
+        
+        else return lroot;
+        
+         
+    }
+};
