@@ -1,0 +1,57 @@
+
+class Solution {
+public:  
+
+    vector<TreeNode*> res;
+
+   void  deleteNodes(TreeNode* root, vector<int>& to_delete,TreeNode* par){
+
+      if(root==NULL) return ;
+
+      deleteNodes(root->left,to_delete,root);
+      deleteNodes(root->right,to_delete,root);
+
+      int ele = root->val;
+
+// if eleemnt is present in the delete list
+      if( find(to_delete.begin(),to_delete.end(),ele) != to_delete.end())
+    {
+        // make parent's child as null
+
+        // its not root node, if oits root node, then we dont have to make root's parent
+        if(par!=NULL){
+              
+              if(par->left && par->left->val == ele)
+               par->left=NULL;
+
+               else
+               par->right=NULL;
+        }
+  
+
+        // make its children disjoint
+        if(root->left)
+        res.push_back(root->left);
+
+        if(root->right)
+        res.push_back(root->right);
+
+     }
+
+   }
+
+
+
+
+    vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
+        
+     deleteNodes(root,to_delete, NULL);
+
+     if( find(to_delete.begin(),to_delete.end(),root->val) == to_delete.end()){
+      res.push_back(root);
+     }
+
+
+     return res;
+    }
+};
