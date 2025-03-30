@@ -1,0 +1,12 @@
+LEft - view
+
+With bfs, frist node of each level
+
+
+
+
+Right view
+
+last node of each level - normal execution
+
+or forst push right node into queue then left
