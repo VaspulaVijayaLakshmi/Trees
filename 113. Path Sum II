@@ -1,0 +1,35 @@
+class Solution {
+public:
+
+    void pathSums(TreeNode* root, int targetSum,vector<int> &path,vector<vector<int>> &res){
+
+     if(root == NULL)
+      return ;
+
+     path.push_back(root->val);
+     targetSum-=root->val;
+
+    if( root->left==NULL && root-> right ==NULL && targetSum == 0){
+       res.push_back(path);
+    //    here we cant have return stmt, because , when it reaches
+    //   leaf, we want to still execute ,  path.pop_back() line if we return it wont
+    // execute tht line
+    }
+
+      pathSums(root->left, targetSum ,path,res);
+      pathSums(root->right,targetSum  ,path,res);
+
+      path.pop_back();
+
+    }
+
+
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        
+        vector<int> path;
+        vector<vector<int>> res;
+
+        pathSums(root,targetSum,path,res);
+        return res;
+    }
+};
