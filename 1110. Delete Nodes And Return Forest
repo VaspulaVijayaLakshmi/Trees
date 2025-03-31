@@ -55,3 +55,49 @@ public:
      return res;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+We can write this way also
+
+  TreeNode*  deleteNodes(TreeNode* root, vector<int>& to_delete){
+
+      if(root==NULL) return NULL;
+
+      root->left =  deleteNodes(root->left,to_delete);
+      root->right = deleteNodes(root->right,to_delete);
+
+      int ele=root->val;
+
+//    if element is present in the delete list
+      if(find(to_delete.begin(),to_delete.end(),ele) != to_delete.end()){
+         
+        if(root->left)
+          res.push_back(root->left);
+
+        if(root->right)   
+        res.push_back(root->right);
+
+        return NULL;
+
+      }
+
+      return root;
+
+
+   }
+
+
+
+
+
