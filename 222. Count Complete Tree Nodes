@@ -4,6 +4,57 @@
 // we need to take advatage of completeness of a binary tree
 // since we already know its a complete BT 
 
+
+
+
+// Here we are should not calculate height like our normal appraoch
+
+// because lets says, we have this
+ 
+//                       2
+//                       /\
+//              5                 6  
+//              /\                /\
+//         7          8         9   10
+//         /\         /
+//     11    12    13  
+
+
+
+//     so if we consider root 5
+
+//     its LH and RH if we calculate traditionally,its still the same - 2(excluding 5)
+
+//     but the no.of nodes are not equal, so for lH and Rh we cant calculate height, 
+//     we need to calculate their completeness.
+
+//     that is left trees left most nodes are euqal to right trees right most nodes
+
+
+//     A tree is complete when , 
+
+//               5           
+//              /\                
+//         7          8        
+//         /\         /\
+//     11    12    13   14
+
+
+//     5->7->11 == 5->8->14 this is complete tree
+
+
+//               5           
+//              /\                
+//         7          8        
+//         /\         /\
+//     11    12    13   
+
+// 5->7->11 != 5->8 
+
+// this is not complete tree and one node is missing
+
+
+
 class Solution {
 public:
 
@@ -33,6 +84,10 @@ public:
 
     if(root==NULL) return 0;
 
+    // Get left height of tree and right height of tree
+    // if they are same, we dont have to traverse further down anymore , 
+    // we can just return 2^ht of elements
+
     int lht = getLH(root->left);
     int rht = getRH(root->right);
 
@@ -41,6 +96,8 @@ public:
      return  pow(2,lht+1) -1 ;
     
 
+    // else keep gng down until they both are equal,
+    // then when it returns the node count, we will keep adding 1 and returning until root
      return 1 + nodes(root->left) + nodes(root->right);
 
    }
@@ -50,6 +107,10 @@ public:
     int countNodes(TreeNode* root) {
        return nodes(root);
     }
+
+
+};
+
 
 
 };
