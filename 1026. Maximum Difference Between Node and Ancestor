@@ -1,0 +1,30 @@
+// https://www.youtube.com/watch?v=cvekQzmBdcs&list=PLpIkg8OmuX-K23LhcamOcDlTBisiNJy5E&index=16
+// Every Node can return its mAX And MIN value in its subtree
+
+class Solution {
+public:
+
+    int maxAncestorDiff(TreeNode* root, int mini, int maxi){
+
+      if(root==NULL) return (maxi-mini);
+
+    //  while gng down mark the max and min values of the
+    //  subtreee seen so far
+
+      mini = min(root->val,mini);
+      maxi = max(root->val,maxi);
+
+     int ldiff = maxAncestorDiff(root->left,mini,maxi);
+     int rdiff = maxAncestorDiff(root->right,mini,maxi);
+
+    // return max abs diff of max and min values for eahc node
+       return max( ldiff,rdiff );
+
+    }
+    
+    int maxAncestorDiff(TreeNode* root) {
+        return maxAncestorDiff(root,INT_MAX,INT_MIN);
+    }
+};
+
+
