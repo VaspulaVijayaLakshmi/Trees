@@ -1,0 +1,55 @@
+
+// so we can normally count it.
+// But then it takes O(N) complexity, 
+// we need to take advatage of completeness of a binary tree
+// since we already know its a complete BT 
+
+class Solution {
+public:
+
+    int getLH(TreeNode* root){
+        
+        int c=0;
+        while(root!=NULL){
+            root=root->left;
+            c++;
+        }
+        return c;
+    }
+
+    int getRH(TreeNode* root){
+
+        int c=0;
+        while(root!=NULL){
+            root=root->right;
+            c++;
+        }
+        return c;
+    }
+
+
+
+   int nodes(TreeNode* root){
+
+    if(root==NULL) return 0;
+
+    int lht = getLH(root->left);
+    int rht = getRH(root->right);
+
+// subtree is complete BT
+    if(lht==rht)
+     return  pow(2,lht+1) -1 ;
+    
+
+     return 1 + nodes(root->left) + nodes(root->right);
+
+   }
+
+
+
+    int countNodes(TreeNode* root) {
+       return nodes(root);
+    }
+
+
+};
