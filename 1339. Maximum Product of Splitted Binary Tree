@@ -1,0 +1,81 @@
+
+// 12*9 =108
+
+// 11*10 = 110
+
+// 5 * 16 = 80
+
+
+// I want sum of complete tree
+
+// and for each node I need subtree sum so far
+
+
+
+
+// when i consider a subtree I have to subtract this 
+// subtree sum from entire subtree sum
+
+
+// total sum =  21
+
+
+    //             1(21)
+    //               /\
+    //     2(11)              3(9)  
+    //      /\               / 
+    //  4(4)     5(5)      6(6)
+
+
+    //  If i remove 2 wala node ->  2 nodes would be (11,(21-11)) -> (11,10)
+
+
+    //  if i remove 5 -> (5,(21-5)) = (5,16)
+
+    //  if i remove 3 -> (9,(21-9)) = (9,11) = 99
+
+
+class Solution {
+public:
+
+    long Treesum =0;
+    long maxi=INT_MIN;
+
+   long treeSum(TreeNode* root){
+
+    if(root==NULL) return 0;
+    return root->val+treeSum(root->left)+treeSum(root->right);
+
+   }
+
+
+
+   int splitTree(TreeNode* root){
+  
+    if(root==NULL) return 0;
+
+    int Lsum = splitTree(root->left);
+    int Rsum = splitTree(root->right);
+     
+    int sum= Lsum+Rsum+root->val;
+
+    maxi = max( maxi , sum*(Treesum-sum)); 
+
+     return sum;
+
+   }  
+
+
+    int maxProduct(TreeNode* root) {
+
+        Treesum= treeSum(root);
+        splitTree(root);
+
+        long MOD=1e9+7;
+
+         return maxi % MOD;
+        
+    }
+};
+
+
