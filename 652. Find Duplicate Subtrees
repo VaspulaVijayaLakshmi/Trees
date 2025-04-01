@@ -1,0 +1,58 @@
+class Solution {
+public:
+
+    unordered_map<string,int> mp;
+    vector<TreeNode*> res;
+
+    string duplicateSubtrees(TreeNode* root){
+
+        if(root==NULL) return " ";
+
+        string lst = duplicateSubtrees(root->left);
+        string rst = duplicateSubtrees(root->right);
+
+// get the subtree as string, with entire left and right children
+        string s = to_string(root->val) + "," + lst +  "," + rst;
+
+// if already present in subtree add it to result, and this is the first time I am seeing this
+        if(mp[s]==1){
+         res.push_back(root);
+        }
+
+
+        //  2 condiitons - if element is 0 increment 
+        //  if element is present more than once(1), we added it to result, no need to add again
+          mp[s]++;
+
+         return s; 
+
+
+    } 
+
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        
+       duplicateSubtrees(root);
+       return res;
+    }
+};
+
+
+
+            //       2
+            //      / \
+            //     2   2
+            //    /    /
+            //   3     3
+
+
+            //        2
+            //      /    \
+            //   2          2
+            //  / \        /
+            // 3   5      3
+
+            // in this example 23 and 23 are not duplicate subtrees
+
+            // so I need to get the subtree as 2,3,5
+            // other subtree is 2,3 which are not same
+
