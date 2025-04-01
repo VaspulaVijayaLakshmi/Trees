@@ -1,0 +1,57 @@
+class Solution {
+public:
+     
+     int sum(TreeNode* root,int currsum) {
+
+        if(root==NULL) {
+            return 0;
+        }
+
+        currsum =  currsum*10 + root->val;
+
+        if(root->left==NULL && root->right==NULL)
+         return currsum;
+
+       int lsum= sum(root->left,currsum);
+       int rsum= sum(root->right,currsum);
+
+       return lsum+rsum;
+    }
+
+
+
+    int sumNumbers(TreeNode* root) {
+
+       int currsum=0;
+      return sum(root,currsum);
+ 
+    }
+};
+
+
+// 120
+  
+//    hundreds            tens              ones 
+//     (10^2) * 1       (10^1) * 2       (10^0) * 0
+//         100               20               0
+
+
+//          4
+//          /\
+//      9          0
+//      /\  
+//    5    1
+
+
+//    495
+//    491  
+
+
+// in examples like this, make sure u take one root and do dry run...
+
+//  i did if(root==NULL) return currsum;
+
+// this does not workout, take there is only 1 root and with val 1 
+// if u dont add the condition to check if its a leaf , u end up adding 2 times 
+
+// dry run and check 
