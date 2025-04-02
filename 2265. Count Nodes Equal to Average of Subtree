@@ -1,0 +1,37 @@
+// for each node we need sum of its subtree
+
+// and calculate avg val of subtree 
+
+class Solution {
+public:
+
+   int nodes=0;
+
+
+//    fun tracks {sum, no.of nodes} for each nodes in the subtree
+
+   pair<int,int> avgSubTree(TreeNode* root){
+
+    if(root==NULL) return {0,0};
+
+   pair<int,int> l = avgSubTree(root->left);
+   pair<int,int> r = avgSubTree(root->right);
+
+   int sum = l.first + r.first + root->val;
+   int n= l.second + r.second + 1;
+
+   int avg = (sum)/n;
+
+   if(avg == root->val) nodes++;
+
+   return {sum,n};
+
+   }
+
+    int averageOfSubtree(TreeNode* root) {
+
+        avgSubTree(root);
+        return nodes;
+        
+    }
+};
