@@ -1,0 +1,60 @@
+
+
+// for every root-> send direction as well
+
+// for root
+
+// say ure cmg from left and 
+    // now for next node if youre gng rght then u can do disSoFar+1
+//     else if youre gng left only then u canstart a new path (with dis 1)
+
+
+class Solution {
+public:
+
+    int longestPath(TreeNode* root, char currdirection, int dis ){
+
+      if(root==NULL) return;
+
+    //   if my curr direction Im cmg from is L, then 
+    // if Im gng to left child then I need to strt a new path
+    // if Im gng to right child then i need to add to the existing alternate path
+
+      if(currdirection=='L'){
+
+        if(root->right)
+            longestPath(root->right, 'R',dis+1);
+        
+
+        if(root->left)
+            longestPath(root->, 'L',1);
+
+      }
+
+
+   //   if my curr direction Im cmg from is R, then 
+    // if Im gng to right child then I need to strt a new path
+    // if Im gng to left child then i need to add to the existing alternate path
+
+
+      if(currdirection=='R'){
+
+        if(root->right)
+            longestPath(root->right, 'L',1);
+        
+
+        if(root->left)
+            longestPath(root->, 'R',dis+1);
+          
+      }
+
+
+      return;
+
+    } 
+
+    int longestZigZag(TreeNode* root) {
+        
+        longestPath(root,direction, dis)
+    }
+};
