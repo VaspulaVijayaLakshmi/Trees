@@ -1,0 +1,46 @@
+// mark indices of the nodes
+// if parent is at index i, children will be at 2*i and 2*i+1
+
+
+class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+
+     queue<pair<TreeNode*,long long>> q;
+     q.push({root,0});
+      
+      long long maxWidth=0;
+
+     while(!q.empty()){
+
+      long long f= q.front().second;
+      long long l= q.back().second;
+
+      maxWidth = max(maxWidth,l-f+1);
+
+      long long s=q.size();
+      while(s--){
+
+        auto front =  q.front().first;
+        long long idx= q.front().second;
+        q.pop();
+
+        if(front->left)
+          q.push({front->left,(long long)2*idx});
+
+        if(front->right)
+          q.push({front->right,(long long)2*idx+1});  
+
+      }
+
+
+     }
+
+
+     return maxWidth;
+        
+    }
+};
+
+
+
