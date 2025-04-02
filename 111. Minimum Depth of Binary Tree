@@ -1,0 +1,39 @@
+// here is we cant use return min(leftHt,rightHt)
+// because think abt this scenario
+
+
+    //      1
+    //       \
+    //        3 
+
+
+    // here  left returns   - 0   
+            //  right returns  - 1
+            //  min of (left,right) -  min(0,1) - 0 
+
+            // so if root->left==NULL return INT_MAX
+
+            // so in the above case min(INT_MAX,1) = 1
+
+class Solution {
+public:
+
+int mindepth(TreeNode* root){
+     if(root==NULL) return INT_MAX;
+
+        if(root->left==NULL && root->right==NULL)
+         return 1;
+
+        int lht= min(INT_MAX , mindepth(root->left));
+        int rht= min(INT_MAX , mindepth(root->right));
+
+        return 1 + min(lht,rht);
+}
+
+    int minDepth(TreeNode* root) {
+
+        if(root==NULL) return 0;
+        return mindepth(root);
+        
+    }
+};
