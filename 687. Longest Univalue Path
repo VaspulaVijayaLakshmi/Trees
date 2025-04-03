@@ -1,0 +1,98 @@
+class Solution {
+public:
+
+   int maxSize = 0;
+    int findPath(TreeNode* root,int par) {
+        
+        if(root==NULL) return 0;
+
+        int lsize = findPath(root->left,root->val);
+        int rsize = findPath(root->right,root->val);
+        
+         // we consider the subtree if we consider subtree's root, we cant extend 
+        // it anymore because it forms reverse V share
+        maxSize = max(maxSize,lsize+rsize);
+
+
+       // we can choose to not consider root of subtree so we either 
+       // extend left ht or right ht
+       if(root->val == par)
+          return max(lsize,rsize)+1;
+
+
+       //  if par not = child then return 0 to strt a new subtree 
+       return 0;
+           
+    }
+
+
+    int longestUnivaluePath(TreeNode* root) {
+        
+        findPath(root,-1);
+        return maxSize;
+
+    }
+};
+
+
+
+
+    //         5
+    //         /\
+    //       4     5
+    //      /\      \
+    //    1    1     5
+
+
+    // while coming back from dfs - 
+
+    // node has 2 children - check if root val == left node
+    //                        check if root val == right node
+
+    //                     left == root == right -> lsize+rsize+root(1)
+
+
+    //  Eg:
+    //  node has 2 children - if node val != left child but is equal to right child
+    //  return max(lsize+1)
+
+
+
+    //  node has 1 child - if root == tht child (1+ node)
+
+    //  node has 1 child and tht node val  != child -> return 1  
+    //  (because 1 element is common, tht is itself)                    
+     
+// in all this process track MAX size.
+
+
+
+// similar to path sum
+
+
+
+
+// O(n^2) solution
+
+
+// class Solution {
+// public:
+//     int longestUnivaluePath(TreeNode* root) {
+//         if(root==NULL)
+//             return 0;
+        
+//         int lmax = findHeight(root->left,root->val);
+//         int rmax = findHeight(root->right,root->val);
+        
+//         return max(lmax+rmax,max(longestUnivaluePath(root->left),longestUnivaluePath(root->right)));
+//     }
+    
+//     int findHeight(TreeNode* root, int data){
+//         if(root==NULL)
+//             return 0;
+//         if(root->val!=data)
+//             return 0;
+        
+//         return 1+max(findHeight(root->left,data),findHeight(root->right,data));
+//     }
+// };
