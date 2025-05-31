@@ -1,0 +1,46 @@
+class Solution {
+public:
+    unordered_map<long,long> mp;
+    int paths=0;
+
+    void pathSum(TreeNode* root, int targetSum,long subsum) {
+
+        if(root==NULL)
+         return ;
+
+        subsum+=root->val;
+
+        if(mp.find(subsum-targetSum) != mp.end()){
+            paths+=mp[subsum-targetSum];
+        }
+
+        mp[subsum]++;
+
+// we should not do targetSUm-root->val - IMP
+        pathSum(root->left,targetSum,subsum);
+        pathSum(root->right,targetSum,subsum);
+
+// Here we should not do, subsum-root->val
+// because we are storing, prefix sums in map, not each element
+// so we need to remove tht subsum
+        mp[subsum]--;
+        
+    }
+
+
+
+    int pathSum(TreeNode* root, int targetSum) {
+        mp[0]=1;
+        pathSum(root,targetSum,0);
+        return paths;
+    }
+};
+
+// subarray sums
+// Prefixsum+backtracking
+
+
+
+
+
+
