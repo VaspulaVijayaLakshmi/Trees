@@ -1,0 +1,123 @@
+class Solution {
+public:
+     unordered_map<int,int> mp;
+
+     int pseudoPalindromic (TreeNode* root) {
+
+        if(root==NULL) return 0;
+
+        mp[root->val]++;
+        int count=0;
+
+        if(root->left==NULL && root->right==NULL){
+            
+            int oddCount=0;
+            // odd number of nodes : we can have 1 node repeated odd no of times
+            for(auto m: mp){
+                if(m.second%2==1)
+                  oddCount++;
+
+            }
+
+            if(oddCount<=1) count++;
+            // remmber we should not return here, because we need backtracking
+
+        }
+
+        count+=pseudoPalindromic(root->left);
+        count+=pseudoPalindromic(root->right);
+
+        mp[root->val]--;
+        if(mp[root->val]==0) mp.erase(root->val);
+
+        return count; 
+
+
+        
+        
+    }
+
+    int pseudoPalindromicPaths (TreeNode* root) {
+
+        return pseudoPalindromic(root);
+
+        
+    }
+};
+
+
+// Find list of all paths to root to leaf
+// any of the permuation is a list is a palindrome
+
+
+// A list is palindrome
+// list size is even ,  all elements should be appearing even number of times
+
+// list size is even , all elemnts occurs even number of times and one elent occurs odd number of time
+
+
+
+// [2,2,2,1,1,1,2,2,2]
+// [2,1,3,1,2] 
+// [3,2,1,1,2,3]
+// [3,2,1,2,3]
+
+// so in root - leaf path, we need to count no.of even nos and odd nons and total no of nodes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+     unordered_map<int,int> mp;
+     int res=0;
+
+     void pseudoPalindromic (TreeNode* root) {
+
+        if(root==NULL) return ;
+
+        mp[root->val]++;
+
+        if(root->left==NULL && root->right==NULL){
+            
+            int oddCount=0;
+            // odd number of nodes : we can have 1 node repeated odd no of times
+            for(auto m: mp){
+                if(m.second%2==1)
+                  oddCount++;
+
+            }
+
+            if(oddCount<=1) 
+            res++;
+        }
+
+        pseudoPalindromic(root->left);
+        pseudoPalindromic(root->right);
+
+        mp[root->val]--;
+        // this doesnt needed bcause if freq of an element is 0 , we dont count it nayway
+        // if(mp[root->val]==0) mp.erase(root->val);  
+        
+    }
+
+    int pseudoPalindromicPaths (TreeNode* root) {
+
+         pseudoPalindromic(root);
+         return res;
+
+        
+    }
+};
+
