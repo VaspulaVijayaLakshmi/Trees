@@ -1,0 +1,42 @@
+class Solution {
+public:
+
+   TreeNode* sufficientSubset(TreeNode* root, int limit,int sum) {
+
+    if(root==NULL)
+     return NULL;
+
+    sum+=root->val; 
+
+    if(root->left==NULL && root->right==NULL ){
+        
+        if(sum<limit)
+          return NULL;
+
+         return root; 
+         
+    }
+
+    root->left = sufficientSubset(root->left,limit,sum);
+    root->right = sufficientSubset(root->right,limit,sum); 
+
+    if(root->left==NULL && root->right==NULL)
+      return NULL;
+
+     return root;  
+
+   }
+
+    TreeNode* sufficientSubset(TreeNode* root, int limit) {
+
+        return sufficientSubset(root,limit,0);
+        
+    }
+};
+
+
+// https://leetcode.com/problems/insufficient-nodes-in-root-to-leaf-paths/
+
+
+// Post-recursion check: After recursion, if both left and right subtrees are removed (nullptr),
+// the current node becomes a leaf and is also removed (returns nullptr).
