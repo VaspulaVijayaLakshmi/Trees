@@ -1,0 +1,37 @@
+class Solution {
+public:
+
+    int sum = 0;
+    int maxDepth =0;
+    
+    void deepestLeavesSum(TreeNode* root,int level) {
+
+        if(root==NULL)
+         return ;
+
+        if(root->left==NULL && root->right==NULL){
+
+            if(maxDepth==level){
+                sum+=root->val;
+            }
+
+            else if(maxDepth<level){
+                maxDepth = level;
+                sum=root->val;
+            }
+
+        } 
+
+        deepestLeavesSum(root->left,level+1);
+        deepestLeavesSum(root->right,level+1);
+        
+    }
+
+
+    int deepestLeavesSum(TreeNode* root) {
+
+        deepestLeavesSum(root,0);
+        return sum;
+        
+    }
+};
