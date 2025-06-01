@@ -1,0 +1,50 @@
+class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+
+        if(root==NULL) return NULL;
+
+        if(root->val < low){
+        // return right subtree if the root is less than low.
+            return trimBST(root->right,low,high);
+        }
+          
+
+        if(root->val>high){
+         // return left subtree if the root is greater than high.
+            return trimBST(root->left,low,high);
+        }
+           
+        root->left = trimBST(root->left,low,high);
+        root->right = trimBST(root->right,low,high);
+
+       return root;
+        
+    }
+};
+
+
+
+// so the problem is , this would work
+
+//  if(root->val < low)
+//            return root->right;
+
+// if(root->val>high)
+//            return root->left;   
+
+
+// neither does this
+
+
+// if(root->val < low){
+//     while (!root && root->val > low) {
+//         root = root->right;
+//     }
+//     return root;
+// }
+
+// ou are trying to iterate deeper if the root is out of range,
+//  but trimming a BST is not just about finding a new root — 
+//  you also have to trim the left and right subtrees recursively or 
+//  iteratively.
