@@ -1,0 +1,81 @@
+
+class Solution {
+public:
+    TreeNode* firstOfRight(TreeNode* node){
+       
+       TreeNode*  root=node->right;
+
+        while(root && root->left!=NULL){
+             root = root->left;
+        }
+
+        return root;
+
+    }
+
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        
+        if(root==NULL)
+         return NULL;
+
+        if (key < root->val) {
+            root->left = deleteNode(root->left, key);
+        } 
+        
+        else if (key > root->val) {
+            root->right = deleteNode(root->right, key);
+        } 
+        
+        else { 
+
+            // leaf node
+            if(root->left==NULL && root->right==NULL)
+             return NULL;
+
+            // one child
+            if(root->left==NULL)
+             return root->right;
+
+            if(root->right==NULL)
+             return root->left;
+
+            // 2children
+            // left most node in right subtree
+            TreeNode* node = firstOfRight(root);
+            root->val = node->val;
+
+            // now the node to be deleted values, need to be traverse
+            // we need to check tht only in the right ST , so we pass only 
+            // RST - root->right
+            root->right = deleteNode(root->right,node->val);      
+        
+        }
+
+        return root;
+
+    }
+};
+
+// if node has no children - remove it
+// if ode has 1 child - child will be attached to ancestor
+
+
+// if node has 2 children - 
+
+// in the below example we will replace 5 with 4
+// because we will becuase w er sure all the elents in lsubtree will be less than tht and all elemnts 
+// to riht will be greate rthan
+
+//              8
+
+//           5 
+
+//        3     6
+
+//      2   4      7 
+
+
+
+// To delete a node with both left and right children, one can either find the predecessor 
+// or the successor of that node, 
+// swap the values then delete the predecessor or successor.
