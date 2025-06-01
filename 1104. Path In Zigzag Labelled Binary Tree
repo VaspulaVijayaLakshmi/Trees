@@ -1,0 +1,102 @@
+class Solution {
+public:
+    vector<int> pathInZigZagTree(int label) {
+
+        vector<int> res;
+        res.push_back(label);
+        int height = log2(label);
+
+        bool rev=false;
+
+        if(height%2==0) 
+          rev =  true;
+
+
+
+        // log(14) = 3.8 ~ 3
+
+        while(height>0){
+
+            // first find the range of values in this level
+            // how we will get this
+             int right = pow(2,height)-1;
+
+            //  ht=3  -> right = 7
+
+           //  how we will get left, it would be the last elemnt of prev leevl
+             int left = pow(2,height-1);
+
+            //  ht=3  -> left = 4
+
+            //  now the levels are reversed in some levels
+
+            // we need to find the idx of the curr element
+            // label = currlevel/2 - 14 -> 14/2 = 7
+            //  7 should be the parent
+            // [4,5,6,7]
+
+            // if 7 is parent then we need 4, 
+            // so 4 + (7-7) 
+
+
+            label =  left + (right - label/2);
+             
+             res.push_back(label);
+             height--;
+
+        }
+
+        reverse(res.begin(),res.end());
+        return res;
+        
+    }
+};
+
+
+// for a node - 
+// if 'i' is node then 2^1+1 and 2^1+2  are the children
+
+
+// child1 = 2^parent+1
+
+// 14 
+
+// (child1-1)/2
+
+// 13/2 -> 7,but the prblm is
+// the nodes are in reverse for even level.
+
+
+
+// so 14th node would come at which level - 
+
+// total levels = 3
+// total nodes =8
+// ttoal nodes = 2^levels
+
+// levels = log to base 2(total nodes)
+
+
+
+// https://leetcode.com/problems/path-in-zigzag-labelled-binary-tree/solutions/323462/c-o-log-n-solution-with-comments/
+
+
+
+
+// [4,5,6,7]
+
+// if parent is 7, then crct par is 4
+// if parent is 5, crct parent is 6
+
+
+// this is because, the nodes are in rev  w.r.t curr
+
+
+
+// Simply find the parent of a label as we find the parent of a node in complete binary tree (label/2).
+// Since upper level is in reverse order relative to the current level, therefore correct parent will be different. For example - if parent is 7 in complete binary tree, correct binary tree will be 4 in this case. If parent is 5 then correct parent will be 6.
+// For finding the correct parent of a node we need to subtract incorrect parent from the sum of minimum and maximum value of the previous level (4+7-(14/2)=4).
+// Minimum value in the previous level = 2^(current_height - 1).
+// Maximum value in the previous level = 2^(current_height)-1.
+// Therefore correct parent will be 2^(current_height - 1) + 2^(current_height)-1 + (label/2)
+// Repeat these steps untill we reach the root node.
