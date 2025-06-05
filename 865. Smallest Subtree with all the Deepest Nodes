@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int maxDepth=0;
+    TreeNode* res=NULL;
+
+    int subTree(TreeNode* root,int depth){
+        if(root==NULL) return depth-1;
+
+        int lh = subTree(root->left,depth+1);
+        int rh = subTree(root->right,depth+1);
+
+        // If current depth is the maximum we have reached, 
+        //then this possibly/POTENTIALLY could be the node we are looking for.
+        if(depth>maxDepth){
+            maxDepth=depth;
+            res=root;
+        }
+
+// if both heights are equal and equal to max depth
+// we will return the common ancestor which would be node, 
+// for which both left depth and right depth would be equal
+
+// remeber, we are returning height max(lh,rh), so at parent node also we will be having same 
+// maxHeight
+        if(lh==rh && lh==maxDepth){
+               res=root;
+        }
+
+        return max(lh,rh);
+
+        
+    }
+
+
+    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+
+        subTree(root,0);
+        return res;
+        
+    }
+};
+
+
+// lh and rh recursively we need to find
+// where the heights are equal - return node
+
+// if hts are not equal, go to the max height side 
+
+
+// Hint: If the left and right subtree heights of a node are the same, 
+// that node is the Lowest Common Ancestor (LCA) of the deepest leaves.
+
+// The problem is asking for the Lowest Common Ancestor of the deepest leaves.
+
+
+
