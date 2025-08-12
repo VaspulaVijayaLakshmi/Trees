@@ -1,0 +1,41 @@
+class Solution {
+public:
+
+    int dfs(vector<vector<int>> &adj,vector<bool>& hasApple,
+            vector<bool> &visited,int node,int parent){
+         
+        int total_time=0; 
+        for(int child: adj[node]){
+
+            if(child==parent) 
+            continue;
+                
+            int child_time = dfs(adj,hasApple,visited,child,node);
+
+                //if the node itself is apple or its subtree has
+                //if its subtree has apple can be counted with if time>0
+            if(hasApple[child] || child_time>0){
+                    total_time += child_time+2;
+            }
+
+        }
+
+           return total_time; 
+        }
+
+
+
+    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
+        
+        vector<vector<int>> adj(n);
+        vector<bool> visited(n,false);
+
+        for(int i=0;i<edges.size();i++){
+            adj[edges[i][0]].push_back(edges[i][1]);
+            adj[edges[i][1]].push_back(edges[i][0]);
+        }
+
+        return dfs(adj,hasApple,visited,0,-1);
+
+    }
+};
