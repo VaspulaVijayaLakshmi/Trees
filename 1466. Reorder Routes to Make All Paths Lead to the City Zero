@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int changes = 0;
+
+    void dfs(vector<vector<pair<int,int>>>& adj, int node, int parent) {
+        for (auto [child, direction] : adj[node]) {
+            if (child == parent) continue;
+
+            if (direction == 1) { 
+                // edge was originally node -> child, needs reversing
+                changes++;
+            }
+            dfs(adj, child, node);
+        }
+    }
+
+    int minReorder(int n, vector<vector<int>>& connections) {
+        vector<vector<pair<int,int>>> adj(n);
+
+        for (auto& e : connections) {
+            int u = e[0], v = e[1];
+            adj[u].push_back({v, 1}); // 1 means u -> v (original direction)
+            adj[v].push_back({u, 0}); // 0 means v -> u (already toward 0)
+        }
+
+        dfs(adj, 0, -1);
+        return changes;
+    }
+};
