@@ -21,7 +21,8 @@ Each () represent a level , so we basically need to calcuate the depth.
 
 
 
-Traversals Given	        Can Build Unique Tree?	          Reason
-Inorder + Preorder	         ✅ Yes	                 Preorder root + inorder splits subtree
-Inorder + Postorder          ✅ Yes	                 Postorder root + inorder splits subtree
-Preorder + Postorder	       ❌ No	                 Multiple trees possible
+| Traversals Given         | Can Build Unique Tree? | Reason                                  |
+|--------------------------|----------------------|----------------------------------------|
+| Inorder + Preorder       | ✅ Yes               | Preorder root + inorder splits subtree |
+| Inorder + Postorder      | ✅ Yes               | Postorder root + inorder splits subtree|
+| Preorder + Postorder     | ❌ No                | Multiple trees possible                 |
