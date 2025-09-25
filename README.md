@@ -8,3 +8,9 @@ Along with GFG series- https://www.geeksforgeeks.org/explore?page=9&category=Tre
 https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree/
 
 https://leetcode.com/discuss/post/1337373/tree-question-pattern-2021-placement-by-t65qm/
+
+
+Intresting Problem : The questions can be asked in reverse
+https://leetcode.com/problems/construct-string-from-binary-tree/description/
+
+Given This string we may be asked to find the depth of the tree
