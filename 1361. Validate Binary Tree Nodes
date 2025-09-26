@@ -1,0 +1,60 @@
+class Solution {
+public:
+
+    bool validateBinaryTreeNodes(int n, vector<int>& leftChild, vector<int>& rightChild){
+        
+      //build the tree.
+      vector<int> inDegree(n,0);
+
+      //all the children should have 1 parent
+        for (int i = 0; i < n; i++) {
+            if (leftChild[i] != -1 && ++inDegree[leftChild[i]] > 1) return false;
+            if (rightChild[i] != -1 && ++inDegree[rightChild[i]] > 1) return false;
+        }
+
+      //there should be 1 root
+      //so 1 root should have indegree 0
+      int root = -1;
+      for(int i=0;i<n;i++){
+
+        if(inDegree[i]==0){
+            if(root==-1)
+              root=i;
+        }}
+
+        if(root==-1) return false; //no root
+
+        //cycle
+        queue<int> q;
+        q.push(root);   //push root here
+        vector<bool> vis(n,false);
+
+        int c=0;
+        
+        while(!q.empty()){
+
+            int node = q.front();
+            q.pop();
+            c++;
+
+            if(vis[node]) return false;
+
+            vis[node]=true;
+
+            if (leftChild[node] != -1) q.push(leftChild[node]);
+            if (rightChild[node] != -1) q.push(rightChild[node]);
+
+        }
+
+        //1 connected component
+        return c == n;
+      }
+
+};
+
+
+
+// - Indegree of a node = how many parents it has.
+// - In a valid binary tree:
+//   - Every node (except root) must have exactly 1 parent.
+//   - The root must have 0 parents.
