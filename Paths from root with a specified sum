@@ -1,0 +1,42 @@
+// User function Template for C++
+
+/*// A Tree node
+struct Node
+{
+    int key;
+    struct Node *left, *right;
+};*/
+
+class Solution {
+  public:
+    vector<vector<int>> res;
+    
+    
+    void printPathsHelper(Node *root, int sum,int pathSum, vector<int> paths){
+        
+        if(root==NULL)
+         return ;
+         
+        pathSum+=root->key;
+        paths.push_back(root->key);
+        
+        if(sum==pathSum)
+           res.push_back(paths);
+           
+         
+        printPathsHelper(root->left,sum,pathSum,paths);
+        printPathsHelper(root->right,sum,pathSum,paths);
+        
+    }
+    
+    vector<vector<int>> printPaths(Node *root, int sum) {
+        
+        vector<int> paths;
+        printPathsHelper(root,sum,0,paths);
+        
+        return res;
+        
+  
+        
+    }
+};
