@@ -11,10 +11,9 @@ https://leetcode.com/discuss/post/1337373/tree-question-pattern-2021-placement-b
 
 
 Intresting Problem : The questions can be asked in reverse:  
-https://leetcode.com/problems/construct-string-from-binary-tree/description/  
+https://leetcode.com/problems/construct-string-from-binary-tree/description/ 
 
-Given This string we may be asked to find the depth of the tree.    
-
+Given This string we may be asked to find the depth of the tree.  
 Each () represent a level , so we basically need to calcuate the depth.  
 
 
@@ -26,3 +25,7 @@ Each () represent a level , so we basically need to calcuate the depth.
 | Inorder + Preorder       | ✅ Yes               | Preorder root + inorder splits subtree |
 | Inorder + Postorder      | ✅ Yes               | Postorder root + inorder splits subtree|
 | Preorder + Postorder     | ❌ No                | Multiple trees possible                 |
+
+
+LCA : 
+The Lowest Common Ancestor (LCA) is like the “meeting point” of two nodes, and it gives you the shortest path between them.
