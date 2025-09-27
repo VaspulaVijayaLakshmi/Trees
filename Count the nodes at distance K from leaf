@@ -1,0 +1,36 @@
+
+class Solution {
+  public:  
+  int c=0;
+  set<Node*> seen;
+   void helper(Node* root,int k, vector<Node*>& paths){
+       
+       if(root==NULL) 
+          return ;
+          
+        paths.push_back(root);  
+        
+        if(root->left==NULL && root->right==NULL){
+            
+           int idx = paths.size()-k-1;
+           if(idx>=0)
+               seen.insert(paths[idx]);
+            
+        }
+          
+        helper(root->left,k,paths);
+        helper(root->right,k,paths);
+        
+        paths.pop_back();
+   }
+  
+    
+    int kthFromLeaf(Node* root, int k) {
+        
+        vector<Node*> paths;
+        helper(root,k,paths);
+        return seen.size();
+        
+    
+    }
+};
