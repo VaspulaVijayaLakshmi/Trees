@@ -1,0 +1,123 @@
+// //MLE because we need to store all the paths for all the nodes
+// class Solution {
+// public:
+//     unordered_map<int,vector<pair<int,char>>> adj;
+//     void getAdj(TreeNode* root){
+//         if(!root) return;
+
+//         if(root->left){
+//             adj[root->val].push_back({root->left->val,'L'});
+//             adj[root->left->val].push_back({root->val,'U'});
+//             getAdj(root->left);
+//         }
+
+//         if(root->right){
+//             adj[root->val].push_back({root->right->val,'R'});
+//             adj[root->right->val].push_back({root->val,'U'});
+//             getAdj(root->right);
+//         }
+//     }
+
+
+
+//     string getDirections(TreeNode* root, int startValue, int destValue) {
+
+//         getAdj(root);
+
+//         queue<pair<int,string>>q;
+//         unordered_set<int>visited;
+
+//         q.push({startValue,""});
+//         visited.insert(startValue);
+
+//         while(!q.empty()){
+//             auto [curr,path]=q.front();
+//             q.pop();
+
+//             if(curr==destValue) return path;
+
+//             for(auto &[ngbr,dir]:adj[curr]){
+//                 if(!visited.count(ngbr)){
+//                     visited.insert(ngbr);
+//                     q.push({ngbr,path+dir});
+//                 }
+//             }
+//         }
+//         return "";
+//     }
+// };
+
+
+//in BFS, if we just store dir, like L,R,U
+// we wouldnt know where we came from...or anything
+
+// so we can store the entire path
+
+
+
+// Approach 2:
+
+class Solution {
+public:
+    TreeNode* LCA(TreeNode* root,int &src,int &dest){
+        if(!root) return NULL;
+
+        if(root->val==src || root->val==dest){
+            return root;
+        }
+
+        TreeNode* l=LCA(root->left,src,dest);
+        TreeNode* r=LCA(root->right,src,dest);
+
+        if(l && r) return root;
+
+        return l?l:r;
+    }
+    bool findPath(TreeNode* lca,int &target,string &path){
+        if(!lca) return false;
+
+        // Found Target
+        if(lca->val==target) return true;
+
+        path.push_back('L');
+        if(findPath(lca->left,target,path)){
+            return true;
+        }
+        path.pop_back();
+
+        path.push_back('R');
+        if(findPath(lca->right,target,path)){
+            return true;
+        }
+        path.pop_back();
+
+        // Not Found
+        return false;
+    }
+
+
+    
+    string getDirections(TreeNode* root, int startValue, int destValue) {
+        TreeNode* lca=LCA(root,startValue,destValue);
+
+        string lcaToSrc="";
+        string lcaToDest="";
+
+        findPath(lca,startValue,lcaToSrc);
+        findPath(lca,destValue,lcaToDest);
+
+        string ans="";
+        // Up for start to LCA
+        for(int i=0;i<lcaToSrc.length();i++){
+            ans.push_back('U');
+        }
+
+        ans+=lcaToDest;
+
+        return ans;
+    }
+};
+
+
+
+// https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another/solutions/6939443/3-approaches-brute-force-optimized-beginner-friendly-easy-solution/
