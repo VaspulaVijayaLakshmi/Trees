@@ -1,0 +1,61 @@
+//not working 
+//failing for a single test case
+
+// class Solution {
+// public:
+//     bool helper(ListNode* head, TreeNode* root,ListNode* tmp){
+
+//         if(tmp==NULL)
+//         return true;
+
+//         if(root==NULL) 
+//          return false; 
+
+//         //curr node and temp match 
+//         if(root->val==tmp->val) tmp=tmp->next;
+
+//         //if curr node and temp didnt match, check if this node
+//         //is equal strt of linekdlist, to strt amtching from here
+//         else if(root->val==head->val) tmp=head;     
+        
+//         //if both r not equal, 
+//         else  tmp=head;
+        
+//         return helper(head,root->left,tmp) || helper(head,root->right,tmp);
+
+//     }
+
+
+//     bool isSubPath(ListNode* head, TreeNode* root) {
+
+//         ListNode* tmp=head; 
+//         return helper(head,root,head);
+        
+//     }
+// };
+
+
+class Solution {
+public:
+
+    bool check2(TreeNode* root , ListNode* head){
+        if(head == NULL) return 1;
+        if(root){
+            if(head->val == root->val){
+            return (check2(root->left , head->next) || check2(root->right , head->next));
+        }
+        }
+
+        return 0;
+    }
+
+    bool isSubPath(ListNode* head, TreeNode* root) {
+        if(root == NULL) return 0;
+        if(head->val == root->val){
+            if(check2(root , head)) return 1;
+        }
+
+        return ( isSubPath(head , root->left) || isSubPath(head, root->right) );
+
+    }
+};
