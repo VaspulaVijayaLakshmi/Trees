@@ -29,3 +29,8 @@ Each () represent a level , so we basically need to calcuate the depth.
 
 LCA : 
 The Lowest Common Ancestor (LCA) is like the “meeting point” of two nodes, and it gives you the shortest path between them.
+
+
+IMP:
+
+2096. Step-By-Step Directions From a Binary Tree Node to Another
