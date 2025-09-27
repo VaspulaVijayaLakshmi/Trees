@@ -1,0 +1,41 @@
+class Solution {
+public: 
+    int moves=0;
+    int distributeCoinsHelper(TreeNode* root) {
+
+        if(root==NULL)
+          return 0;
+
+        int l = distributeCoinsHelper(root->left);
+        int r = distributeCoinsHelper(root->right);
+
+
+        //abs of coins - will return the coins
+        moves += abs(l)+abs(r);
+        
+       //we will return a negative number, so neg number reprsetns 
+       // we need coins, positve numer represents, we have coins
+       //also we are doind abs(l)+abs(r) - because
+       //the path each line is  1 and coins==1
+
+       //also abs(because) -  in case of deficent , we need to calulcate 
+       //the path 
+
+        //return the coins - excess/deficet
+        return (l+r+root->val)-1;
+  
+    }
+
+
+    int distributeCoins(TreeNode* root) {
+       
+       distributeCoinsHelper(root);
+       return moves;
+  
+    }
+};
+
+
+
+// so for each subtree we will calculate the excess/deficet coins and 
+// calculate moves needed, also sed back the excess coins ill have.
