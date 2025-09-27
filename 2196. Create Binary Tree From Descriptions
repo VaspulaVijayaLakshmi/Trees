@@ -1,0 +1,42 @@
+class Solution {
+public:
+    unordered_map<int, TreeNode*> mp;
+    unordered_set<int> childSet;
+
+    TreeNode* createBinaryTree(vector<vector<int>>& des) {
+        for (int i = 0; i < des.size(); i++) {
+            int par = des[i][0];
+            int child = des[i][1];
+            bool l = des[i][2];
+
+            // fetch or create parent
+            if (mp.find(par) == mp.end()) {
+                mp[par] = new TreeNode(par);
+            }
+            TreeNode* parent = mp[par];
+
+            // fetch or create child
+            if (mp.find(child) == mp.end()) {
+                mp[child] = new TreeNode(child);
+            }
+            TreeNode* node = mp[child];
+
+            // mark child
+            childSet.insert(child);
+
+            // attach
+            if (l) parent->left = node;
+            else parent->right = node;
+        }
+
+        // root is the one parent not in childSet
+        for (auto &entry : mp) {
+            if (childSet.find(entry.first) == childSet.end()) {
+                return entry.second;
+            }
+        }
+
+        return nullptr;
+    }
+};
+
