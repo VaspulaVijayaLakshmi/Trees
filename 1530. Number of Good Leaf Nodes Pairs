@@ -1,0 +1,78 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public: 
+    int c=0;
+    vector<int> countPairsHelper(TreeNode* root, int dis){
+         if(root==NULL)
+           return {};
+
+          if(root->left==NULL && root->right==NULL)
+            return {1}; 
+
+          auto L = countPairsHelper(root->left,dis);
+          auto R = countPairsHelper(root->right,dis);
+
+          for(int i=0;i<L.size();i++){
+            for(int j=0;j<R.size();j++){
+
+                if(L[i]+R[j]<=dis)
+                  c++;
+            }
+          } 
+
+          //now whats need to be returned
+          //we need not return all leaves with distance+1
+          //because if the distance of leaves are greater than distance(K) 
+          //then no need of returning.
+          vector<int> res;
+          for(int d: L) if(d+1<=dis) res.push_back(d+1);
+          for(int d: R) if(d+1<=dis) res.push_back(d+1);
+
+          return res;
+    }
+
+
+    int countPairs(TreeNode* root, int distance) {
+
+       countPairsHelper(root,distance);
+       return c;
+        
+    }
+};
+
+
+
+//we can store - pair<int,int> - no.of leaves, distance from the subtre root.
+
+
+//    X
+//    / \
+//   A   B
+//      /
+//     C
+
+
+// From X:
+
+// Leaf A is at distance 1.
+
+// Leaf C is at distance 2.
+
+// So at X, you must carry all distances of all leaves below.
+
+// But here’s the key trick: you don’t need to store {leafId, dist} separately — just the multiset of distances.
+
+// Example: instead of {(leaf1,1), (leaf2,2)}, you can just store:
+
+// [1, 2]
+// because for counting good leaf pairs, leaf identity doesn’t matter, only how far they are.
