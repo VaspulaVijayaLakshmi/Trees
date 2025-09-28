@@ -1,0 +1,91 @@
+class Codec {
+public:
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+
+        if(root==NULL)
+         return "null";
+
+        queue<TreeNode*> q;
+        q.push(root);
+        string s;
+
+        while(!q.empty()){
+
+            auto front = q.front();
+            q.pop();
+
+            if(front){
+             s+= to_string(front->val)+","; 
+              q.push(front->left);
+              q.push(front->right);
+            }  
+
+            else {
+             s+="null,";
+            }
+
+        }
+
+         return s;
+        
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+
+        if(data=="null")
+           return NULL;
+
+        stringstream ss(data);
+        string token;
+        getline(ss, token, ',');
+
+        TreeNode* root = new TreeNode(stoi(token));
+
+        queue<TreeNode*> q;
+        q.push(root);
+
+        while(!q.empty()){
+
+            TreeNode* front=q.front();
+            q.pop();
+
+            if(!getline(ss,token,',')) break;
+
+            if(token!="null"){
+                front->left = new TreeNode(stoi(token));
+                q.push(front->left);
+            }
+            
+
+            if(!getline(ss,token,',')) break;
+
+            if(token!="null"){
+                front->right = new TreeNode(stoi(token));
+                q.push(front->right);
+            }  
+            
+
+        }
+
+        return root;      
+    }
+};
+
+
+// getline(ss, token, ',')
+// Reads the next token from the stream (up to the comma).
+// Returns true if it successfully read something, false if end of string.
+
+// if (token != "null")
+// "null" means this parent does not have a left/right child.
+// So we skip creating a new node, but the loop continues for other children.
+
+
+
+// getline:
+// Reads a line (or until a delimiter) from a stream into a string.
+
+// So each getline advances the stream cursor automatically — you don’t have to manually move it.
