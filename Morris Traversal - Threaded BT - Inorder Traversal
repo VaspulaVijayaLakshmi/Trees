@@ -1,0 +1,121 @@
+// class Solution {
+// public:
+//     vector<int> inorderTraversal(TreeNode* root) {
+
+//         if(root==NULL)
+//           return {};
+        
+//         stack<TreeNode*> stk;
+//         stk.push(root);
+
+//         vector<int> res;
+
+//         while(!stk.empty()){
+
+//             auto front = stk.top();
+            
+//             while(front->left){
+//                  stk.push(front->left);
+//                  front=front->left;
+//             }
+            
+//             front=stk.top();
+//             stk.pop();
+
+//             res.push_back(front->val);
+
+//             if(front->right)
+//               stk.push(front->right); 
+
+//         }
+
+//         return res;
+//     }
+// };
+
+
+//Morris Traversal
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+
+        if(root==NULL)
+          return {};
+        
+        TreeNode* curr=root;
+        vector<int> res;
+
+        while(curr!=NULL){
+
+        if(curr->left==NULL){
+            res.push_back(curr->val);
+            curr=curr->right;
+        }  
+
+        else{
+
+            TreeNode* leftChild=curr->left;
+
+            while(leftChild->right!=NULL){
+                leftChild = leftChild->right;
+            }
+
+            leftChild->right=curr;
+
+            TreeNode* tmp = curr;
+            curr=curr->left;
+            
+            //this is imp to not repeat the process
+            //once i come back to parent
+            tmp->left=NULL;
+
+        }
+        }
+        
+      return res;
+    }
+};
+
+
+//morris traversal logic -> threaded Binary Tree
+//thread the BT
+
+//so the right most node needs to be attached to the root of the parent..dorectly instead of hops
+
+//       1
+//      / \
+//     2   3
+//    / \
+//   4   5   
+
+//now first step -> go to 1's left child
+
+// -> now go right most of left child, go to 5 , thread it to 1
+// now im done
+// now before gng further
+// make curr = 2 
+
+//IMP STEP****
+// make 1->left as null - 
+
+
+// now curr will be 2 - same process
+// its leftchild-4, fid the righht most of it
+// now its - NULL
+
+// 4->right=2 (curr)
+
+// curr=curr->left
+
+// curr 4
+
+// now from 4 we will come to 4->right = 2
+
+// now we will be at 2, again we will come to 4 and repat the process
+// if we dont make it NULL
+
+
+
+
+
