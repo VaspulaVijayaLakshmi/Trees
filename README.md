@@ -34,3 +34,4 @@ The Lowest Common Ancestor (LCA) is like the “meeting point” of two nodes, a
 IMP:
 
 2096. Step-By-Step Directions From a Binary Tree Node to Another
+1028. Recover a Tree From Preorder Traversal - imp to learn how to handle indices
