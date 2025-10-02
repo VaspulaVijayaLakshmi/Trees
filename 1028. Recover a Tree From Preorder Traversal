@@ -1,0 +1,52 @@
+
+class Solution {
+public: 
+    TreeNode* recoverTree(string t,int &idx,int depth){
+
+        if(idx>=t.size())
+          return NULL;
+        
+        int j=idx;
+        while(j<t.size() && t[j]=='-'){
+            j++;
+        }   
+
+        int dashCount=j-idx;
+
+        if(dashCount!=depth)
+           return NULL;
+
+        idx+=dashCount;
+   
+        //form diigts
+        int num=0;
+        while(idx<t.size() && t[idx]!='-'){
+          num = num*10 + (t[idx]-'0');
+          idx++;
+        }
+
+        TreeNode* root=new TreeNode(num);
+        root->left = recoverTree(t,idx,depth+1);
+        root->right = recoverTree(t,idx,depth+1);
+
+        return root;  
+            
+    }
+
+
+    TreeNode* recoverFromPreorder(string traversal) {
+
+        int idx=0;
+        return recoverTree(traversal,idx,0);
+        
+    }
+};
+
+
+// preorder - root left right
+
+// same like serialize and deserialze.
+
+
+// deserialse
+// instead of checking for  , we need to see next elememtn after skipping -
