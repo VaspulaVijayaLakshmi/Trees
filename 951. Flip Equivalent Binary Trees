@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool flipEquiv(TreeNode* root1, TreeNode* root2) {
+
+        if(root1==NULL && root2==NULL) 
+         return true;
+
+        if(root1==NULL || root2==NULL)
+         return false;
+
+        if(root1->val!=root2->val)
+         return false; 
+
+        
+        else return  (flipEquiv(root1->left,root2->left) && 
+        flipEquiv(root1->right,root2->right)) 
+                   ||
+        (flipEquiv(root1->left,root2->right) && flipEquiv(root1->right,root2->left));
+           
+    }
+};
+
+
+// this invert a binary tree at its root, and check if both are equal.
+
+
+
+// so from root , come down
+
+// if(root1==root2)
+// come down.
+
+// so, if both the nodes are eaual, come left and right..
+
+// if both are not equal, 
+
+// but root1->left==root2->right
+
+// invert the binary .....
