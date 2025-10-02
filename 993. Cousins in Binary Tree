@@ -1,0 +1,48 @@
+class Solution {
+public:
+    bool isCousins(TreeNode* root, int x, int y) {
+
+        queue<TreeNode*> q;
+        q.push(root);
+        int found=0;
+
+        while(!q.empty()){
+
+            int size=q.size();
+            for(int i=1;i<=size;i++){
+               
+               auto front = q.front();
+               q.pop();
+               
+               if(front->left && front->right){
+
+               // same parent for both children
+                    if(front->left->val == x && front->right->val==y ||
+                       front->left->val == y && front->right->val == x){
+                        return false;
+                    }
+               }
+
+                if(front->val==x || front->val==y){
+                    if(++found==2)
+                      return true;
+                   }
+
+               if(front->left)
+                q.push(front->left);
+
+               if(front->right)
+                q.push(front->right); 
+
+            }
+
+            if(found==1)
+             return false;
+        }
+
+
+        return false;
+
+        
+    }
+};
