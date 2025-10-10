@@ -1,0 +1,93 @@
+class Solution {
+public:
+
+    bool isValid(int x,int y,vector<vector<int>>& grid){
+
+    if(x<0 || x>=grid.size() || y<0 || y>=grid[0].size() || grid[x][y]!=0)
+      return false;
+
+    return true;
+   }
+
+    vector<vector<int>> highestPeak(vector<vector<int>>& grid) {
+        
+        int n=grid.size();
+        int m=grid[0].size();
+
+        queue<vector<int>> q;
+        vector<vector<int>> dir = {{1,0}, {-1,0}, {0,1}, {0,-1}}; 
+    
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                
+                //water 
+                if(grid[i][j]==1){
+
+                    grid[i][j]=-1;
+                    q.push({0,i,j});
+                }
+            }
+        }
+
+        //bfs
+        while(!q.empty()){
+
+            int size=q.size();
+
+            while(size--){
+
+            auto front=q.front();
+            q.pop();
+
+            int x=front[1];
+            int y=front[2];
+            int dis=front[0];
+            
+            for(int i=0;i<4;i++){
+
+                int nx=x+dir[i][0];
+                int ny=y+dir[i][1];
+
+                if(isValid(nx,ny,grid)){
+                    
+                    grid[nx][ny]=dis+1;
+                    q.push({dis+1,nx,ny});
+                }
+            }
+
+            }    
+
+        }
+
+        for(int i=0;i<n;i++)
+         for(int j=0;j<m;j++){
+            if(grid[i][j]==-1){
+                grid[i][j]=0;;
+            }
+         }
+
+         return grid;
+        
+    }
+};
+
+// 0,1
+// 0,0
+
+// 0-land 
+// 1- water
+
+
+// 1 should remain 1, other we need to change
+
+// this is a MS - BFS
+
+// take all water cells ->  1
+// around it increase it to +1 for each land cell.
+
+
+// consider all water cells..make its height to 0
+// now take all these 0,s and do bfs
+
+
+
