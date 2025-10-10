@@ -1,0 +1,80 @@
+class Solution {
+public:  
+
+    int diameterTree(int root,int par,vector<vector<int>>& adj,int &diameter){
+
+        int max1=0,max2=0;
+        for(int child:adj[root]){
+
+            if(par==child) continue;
+
+          int ht=diameterTree(child,root,adj,diameter);
+          if(ht>max1){
+            max2=max1;
+            max1=ht;
+          }
+
+          else if(ht>max2){
+            max2=ht;
+          }
+
+        }
+
+        diameter = max(diameter,max1+max2);
+        return 1+max1;
+
+    }
+
+
+    int minimumDiameterAfterMerge(vector<vector<int>>& edges1, vector<vector<int>>& edges2) {
+
+        vector<vector<int>> adj1(edges1.size()+1);
+        vector<vector<int>> adj2(edges2.size()+1);
+
+        for(auto edge:edges1){
+          adj1[edge[0]].push_back(edge[1]);
+          adj1[edge[1]].push_back(edge[0]);
+        }
+
+        for(auto edge:edges2){
+          adj2[edge[0]].push_back(edge[1]);
+          adj2[edge[1]].push_back(edge[0]);
+        }
+
+        int d1=0,d2=0;
+         
+        diameterTree(0,-1,adj1,d1);
+        diameterTree(0,-1,adj2,d2);
+
+        int r1 = (d1+1)/2;
+        int r2 = (d2+1)/2;
+
+        //we cant directly send r1+r2
+        //because what if d1 is greater than r1+r2...
+
+        return max({d1, d2, r1 + r2 + 1}); 
+    }
+};
+
+
+
+
+
+//the best way to join the trees is fiding the centrer of the both the trees and add them.
+
+
+
+// find the diameter of tree1
+// find diameter of tree2
+
+// radius of tree1 - r1
+// radius of tree2 - r2
+
+// this finds the center of both the trees.
+
+// we can connect this way.
+
+
+// farthest leaf of tree1 - center of tree1 - connecting edge - center of tree2 - farthest laf of tree2
+
+
