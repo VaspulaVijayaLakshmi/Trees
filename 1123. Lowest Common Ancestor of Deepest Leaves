@@ -1,41 +1,32 @@
 class Solution {
 public:
 
-int maxDepth=0;
-    TreeNode* res=NULL;
+pair<int, TreeNode*> dfs(TreeNode* root) {
+    if (root == NULL)
+        return {0, NULL};
 
-    int subTree(TreeNode* root,int depth){
-        if(root==NULL) return depth-1;
+    auto left = dfs(root->left);
+    auto right = dfs(root->right);
 
-        int lh = subTree(root->left,depth+1);
-        int rh = subTree(root->right,depth+1);
-
-        // If current depth is the maximum we have reached, 
-        //then this possibly/POTENTIALLY could be the node we are looking for.
-        if(depth>maxDepth){
-            maxDepth=depth;
-            res=root;
-        }
-
-// if both heights are equal and equal to max depth
-// we will return the common ancestor which would be node, 
-// for which both left depth and right depth would be equal
-
-// remeber, we are returning height max(lh,rh), so at parent node also we will be having same 
-// maxHeight
-        if(lh==rh && lh==maxDepth){
-               res=root;
-        }
-
-        return max(lh,rh);
-
-        
+    if (left.first == right.first) {
+        // Deepest leaves exist at same depth on both sides
+        return {left.first + 1, root};
     }
+    else if (left.first > right.first) {
+        return {left.first + 1, left.second};
+    }
+    else {
+        return {right.first + 1, right.second};
+    }
+}
 
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
 
-         subTree(root,0);
-        return res;
+         return dfs(root).second;
         
     }
 };
+
+
+
+// Return (maxht,lca) at each node and at parent pick which pair which has maxHt. in the end if I see the hts are similar then that node will be lca
